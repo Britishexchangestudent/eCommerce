@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useQuery } from "urql";
+import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
 import Product from "../components/Product";
 import { PRODUCT_QUERY } from "../lib/query";
@@ -8,12 +9,16 @@ export default function Home() {
   const [results] = useQuery({ query: PRODUCT_QUERY });
   const { data, fetching, error } = results;
 
-  if (fetching) return <p>Loading...</p>;
+  if (fetching)
+    return (
+      <div className="flex justify-center items-center">
+        <Loader />
+      </div>
+    );
   if (error) return <p>Error...{error.message}</p>;
   // const products = data.products.data;
-  const products = data?.products?.data
-console.log(`product@@@@s`, products)
-
+  const products = data?.products?.data;
+  console.log(`product@@@@s`, products);
 
   return (
     <div>
